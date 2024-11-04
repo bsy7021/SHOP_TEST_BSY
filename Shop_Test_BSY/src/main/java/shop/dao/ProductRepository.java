@@ -13,8 +13,7 @@ public class ProductRepository extends JDBConnection {
 	 */
 	public List<Product> list() {
 		List<Product> proList = new ArrayList<Product>();
-		String SQL = " SELECT * FROM product"
-				   + " product_id "
+		String SQL = " SELECT * FROM product "
 				   ;
 		try {
 			stmt = con.createStatement();
@@ -25,11 +24,11 @@ public class ProductRepository extends JDBConnection {
 				product.setProductId(rs.getString("product_id"));
 				product.setName(rs.getString("name"));
 				product.setUnitPrice(rs.getInt("unit_price"));
-				product.setDescription(rs.getString("dexcription"));
+				product.setDescription(rs.getString("description"));
 				product.setManufacturer(rs.getString("manufacturer"));
 				product.setCategory(rs.getString("category"));
 				product.setUnitsInStock(rs.getLong("units_in_stock"));
-				product.setCondition(rs.getString("`condition`"));
+				product.setCondition(rs.getString("condition"));
 				product.setFile(rs.getString("file"));
 				product.setQuantity(rs.getInt("quantity"));
 				proList.add(product);
@@ -51,7 +50,7 @@ public class ProductRepository extends JDBConnection {
 		List<Product> proList = new ArrayList<Product>();	// 검색 결과를 저장할 Product 객체 리스트 생성
 		String SQL = " SELECT * FROM product"
 				   + " WHERE name LIKE concat ('%', ?, '%') "	// 상품 이름(name)에 keyword가 포함되어 있는지 확인
-				   + " OR descrition LIKE concat ('%', ?, '%') "
+				   + " OR description LIKE concat ('%', ?, '%') "
 				   + " OR manufacturer LIKE concat ('%', ?, '%') "
 				   + " OR category LIKE concat ('%', ?, '%') "
 				   ;
@@ -90,31 +89,38 @@ public class ProductRepository extends JDBConnection {
 	 * @param productId
 	 * @return
 	 */
+	/**
+	 * 상품 조회
+	 * @param productId
+	 * @return
+	 */
 	public Product getProductById(String productId) {
-		Product product = new Product();
-		String SQL = " SELECT * FROM product "
-				   + " WHERE product_id = ? "
-				   ;
-		try {
-			psmt = con.prepareStatement(SQL);
-			psmt.setString(1, product.getProductId());
-			psmt.setString(2, product.getName());
-			psmt.setInt(3, product.getUnitPrice());
-			psmt.setString(4, product.getDescription());
-			psmt.setString(5, product.getManufacturer());
-			psmt.setString(6, product.getCategory());
-			psmt.setLong(7, product.getUnitPrice());
-			psmt.setString(8, product.getCondition());
-			psmt.setString(9, product.getFile());
-			psmt.setInt(10, product.getQuantity());
-			
-			rs = psmt.executeQuery();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return product;
+	    Product product = null; // 기본값을 null로 설정하여 결과가 없을 경우에도 반환할 수 있게 합니다.
+	    String SQL = "SELECT * FROM product WHERE product_id = ?";
+	    try {
+	        psmt = con.prepareStatement(SQL);
+	        psmt.setString(1, productId); // 매개변수로 받은 productId 사용
+	        rs = psmt.executeQuery();
+
+	        if (rs.next()) { // 결과가 있을 경우에만 Product 객체 생성
+	            product = new Product();
+	            product.setProductId(rs.getString("product_id"));
+	            product.setName(rs.getString("name"));
+	            product.setUnitPrice(rs.getInt("unit_price"));
+	            product.setDescription(rs.getString("description"));
+	            product.setManufacturer(rs.getString("manufacturer"));
+	            product.setCategory(rs.getString("category"));
+	            product.setUnitsInStock(rs.getLong("units_in_stock"));
+	            product.setCondition(rs.getString("condition"));
+	            product.setFile(rs.getString("file"));
+	            product.setQuantity(rs.getInt("quantity"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return product;
 	}
+
 	
 	
 	/**
@@ -230,32 +236,3 @@ public class ProductRepository extends JDBConnection {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

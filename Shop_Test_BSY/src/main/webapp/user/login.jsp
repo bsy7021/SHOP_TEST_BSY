@@ -21,9 +21,22 @@
 			response.sendRedirect(root + "/user/logged.jsp");
 		}
 		
-		// 아이디 저장 쿠키 가져오기
-		
-		
+		// 아이디 저장 쿠키 확인
+		String rememberId = "";
+		String username = "";
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				String cookieName = cookie.getName();
+				String cookieValue = URLDecoder.decode(cookie.getValue(), "UTF-8");
+				switch(cookieName){
+					case "loginId" : username = cookieValue; break;
+					case "rememberId" : rememberId = cookieValue; break;
+				}
+			}
+		}
+		pageContext.setAttribute("loginId", username);
+		pageContext.setAttribute("rememberId", rememberId);
 	%>
 	<jsp:include page="/layout/header.jsp" />
 	<div class="px-4 py-5 mt-5 text-center">
@@ -86,11 +99,3 @@
 	<jsp:include page="/layout/script.jsp" />
 </body>
 </html>
-
-
-
-
-
-
-
-

@@ -26,7 +26,6 @@
 		
 		UserRepository userDAO = new UserRepository();
 		User loginUser = userDAO.getUserById(loginId);
-		
 		// 이메일 : 아이디@도메인 분리
 		String mail = loginUser.getMail();
 		String[] temp = {"",""};
@@ -272,11 +271,3 @@
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-

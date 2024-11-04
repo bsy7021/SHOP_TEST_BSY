@@ -27,9 +27,8 @@ public class UserRepository extends JDBConnection {
 				   + " ,mail "
 				   + " ,phone "
 				   + " ,address "
-				   + " ,regist_day "
 				   + " ) "
-				   + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) "
+				   + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ? ) "
 				   ;
 		
 		try {
@@ -42,7 +41,6 @@ public class UserRepository extends JDBConnection {
 			psmt.setString(6, user.getMail());
 			psmt.setString(7, user.getPhone());
 			psmt.setString(8, user.getAddress());
-			psmt.setString(9, user.getRegistDay());
 			
 			result = psmt.executeUpdate();
 			
@@ -65,7 +63,7 @@ public class UserRepository extends JDBConnection {
 	public User login(String id, String pw) {
 		User user = new User();
 		String SQL = " SELECT * FROM user "
-				   + " WHERE id = ? AND pw = ? "
+				   + " WHERE id = ? AND password = ? "
 				   ;
 		
 		try {
@@ -75,17 +73,17 @@ public class UserRepository extends JDBConnection {
 			
 			rs = psmt.executeQuery();
 			
-			if ( rs.next() ) {
-				user.setId(rs.getString("id"));
-				user.setId(rs.getString("password"));
-				user.setId(rs.getString("name"));
-				user.setId(rs.getString("gender"));
-				user.setId(rs.getString("birth"));
-				user.setId(rs.getString("mail"));
-				user.setId(rs.getString("phone"));
-				user.setId(rs.getString("address"));
-				user.setId(rs.getString("regist_day"));
-			}
+	        if ( rs.next() ) {
+	            user.setId(rs.getString("id"));
+	            user.setPassword(rs.getString("password"));
+	            user.setName(rs.getString("name"));
+	            user.setGender(rs.getString("gender"));
+	            user.setBirth(rs.getString("birth"));
+	            user.setMail(rs.getString("mail"));
+	            user.setPhone(rs.getString("phone"));
+	            user.setAddress(rs.getString("address"));
+	            user.setRegistDay(rs.getString("regist_day"));
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,14 +112,14 @@ public class UserRepository extends JDBConnection {
 			
 			if ( rs.next() ) {
 				user.setId(rs.getString("id"));
-				user.setId(rs.getString("password"));
-				user.setId(rs.getString("name"));
-				user.setId(rs.getString("gender"));
-				user.setId(rs.getString("birth"));
-				user.setId(rs.getString("mail"));
-				user.setId(rs.getString("phone"));
-				user.setId(rs.getString("address"));
-				user.setId(rs.getString("regist_day"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setGender(rs.getString("gender"));
+				user.setBirth(rs.getString("birth"));
+				user.setMail(rs.getString("mail"));
+				user.setPhone(rs.getString("phone"));
+				user.setAddress(rs.getString("address"));
+				user.setRegistDay(rs.getString("regist_day"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,29 +137,24 @@ public class UserRepository extends JDBConnection {
 	public int update(User user) {
 		int result = 0;
 		String SQL = " UPDATE user SET "
-				   + " id "
-				   + " ,password "
-				   + " ,name "
-				   + " ,gender "
-				   + " ,birth "
-				   + " ,mail "
-				   + " ,phone "
-				   + " ,address "
-				   + " ,regist_day "
+				   + " name = ? "
+				   + " ,gender = ? "
+				   + " ,birth = ? "
+				   + " ,mail = ? "
+				   + " ,phone = ? "
+				   + " ,address = ? "
 				   + " WHERE id = ? "
 				   ;
 		
 		try {
 			psmt = con.prepareStatement(SQL);		// psmt : preparedStatement 객체
-			psmt.setString(1, user.getId());	// VALUE ? 에 순서대로 변수 대입
-			psmt.setString(2, user.getPassword());
-			psmt.setString(3, user.getName());
-			psmt.setString(4, user.getGender());
-			psmt.setString(5, user.getBirth());
-			psmt.setString(6, user.getMail());
-			psmt.setString(7, user.getPhone());
-			psmt.setString(8, user.getAddress());
-			psmt.setString(9, user.getRegistDay());	
+			psmt.setString(1, user.getName());
+			psmt.setString(2, user.getGender());
+			psmt.setString(3, user.getBirth());
+			psmt.setString(4, user.getMail());
+			psmt.setString(5, user.getPhone());
+			psmt.setString(6, user.getAddress());
+			psmt.setString(7, user.getId());	// VALUE ? 에 순서대로 변수 대입
 			
 			result = psmt.executeUpdate();
 			

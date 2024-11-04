@@ -1,6 +1,4 @@
-<!-- 
-	회원 가입 처리
- -->
+<!-- 회원 가입 처리 -->
 <%@page import="shop.dao.UserRepository"%>
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -14,8 +12,11 @@
 	String password = request.getParameter("pw");
 	String name = request.getParameter("name");
 	String gender = request.getParameter("gender");
-	String birth = request.getParameter("birth");
-	String mail = request.getParameter("mail");
+	String birth = request.getParameter("year");
+	birth += "/" + request.getParameter("month");
+	birth += "/" + request.getParameter("day");
+	String email = request.getParameter("email1");
+	email += "@" + request.getParameter("email2");
 	String phone = request.getParameter("phone");
 	String address = request.getParameter("address");
 	String regist_day = request.getParameter("regist_day");
@@ -25,7 +26,7 @@
 	user.setName(name);
 	user.setGender(gender);
 	user.setBirth(birth);
-	user.setMail(mail);
+	user.setMail(email);
 	user.setPhone(phone);
 	user.setAddress(address);
 	user.setRegistDay(regist_day);
