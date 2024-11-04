@@ -23,9 +23,9 @@
 		<div class="col-lg-6 mx-auto">
 			<p class="lead mb-4">쇼핑몰 상품목록 입니다.</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-				<a href="/shop/add.jsp" class="btn btn-primary btn-lg px-4 gap-3">상품등록</a>
-				<a href="/shop/editProducts.jsp" class="btn btn-success btn-lg px-4 gap-3">상품편집</a>
-				<a href="/shop/cart.jsp" class="btn btn-warning btn-lg px-4 gap-3">장바구니</a>
+				<a href="<%= root %>/shop/add.jsp" class="btn btn-primary btn-lg px-4 gap-3">상품등록</a>
+				<a href="<%= root %>/shop/editProducts.jsp" class="btn btn-success btn-lg px-4 gap-3">상품편집</a>
+				<a href="<%= root %>/shop/cart.jsp" class="btn btn-warning btn-lg px-4 gap-3">장바구니</a>
 			</div>
 		</div>
 	</div>
